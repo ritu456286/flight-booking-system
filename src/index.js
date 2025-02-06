@@ -1,0 +1,16 @@
+const express = require('express')
+const { ServerConfig} = require("./configs")
+const { apiRoutes } = require('./routes')
+
+const app = express()
+
+
+
+
+app.use("/api", apiRoutes);
+
+
+app.listen(ServerConfig.PORT, () =>{
+    console.log("Server started at port ", ServerConfig.PORT);
+
+})
