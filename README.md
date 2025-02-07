@@ -10,6 +10,10 @@ ex:
 ```
     PORT=3000
 ```
+- Inside the folder path, execute the following to download the dependencies:
+```
+  npm install
+``` 
 
 - Inside the `src/config` folder, create a file named `config.json`, and paste the following code:
 ```
@@ -37,5 +41,14 @@ ex:
   }
 }
 ```
+- go inside the `src` folder, and execute the following command:
+```
+  npx sequelize init
+```
+- By executing the above command, you wil get migrations and seeders folders along with the given default config.json file.
 - If you're setting up your development environment, then write the username of your db, password of your db, and in dialect mention whatever db you are using. For ex: mysql, postgres, mariadb, etc.
 - If you're setting up test or prod environment, make sure you also replace the host with the hosted db url. 
+- To run the server execute:
+```
+  npm run dev
+```
