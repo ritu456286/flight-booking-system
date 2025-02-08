@@ -1,5 +1,6 @@
-const { AirplaneRepository } = require("../repositories")
-
+const { AirplaneRepository } = require("../repositories");
+const AppError = require("../utils/errors/app-error");
+const { StatusCodes } = require("http-status-codes");
 const airplaneRepository = new AirplaneRepository(); 
 
 class AirplaneService{
@@ -12,8 +13,14 @@ class AirplaneService{
             const response = await airplaneRepository.create(data);
             return response;
         } catch (error) {
-            console.log("Error in airplane-service: createAirplane");
-            throw error;
+           
+            if(error.name === "SequelizeValidationError"){
+                let explaination = [];
+                error.errors.forEach((err) => explaination.push(err.message));
+                
+                throw new AppError(explaination, StatusCodes.BAD_REQUEST);
+            }
+            throw new AppError("Cannot create a new Airplane object", StatusCodes.INTERNAL_SERVER_ERROR);
         }
     }
     async deleteAirplane (data) { //data for now is id, later destructure the data
@@ -21,7 +28,7 @@ class AirplaneService{
             const response = await airplaneRepository.destroy(data);
             return response;
         } catch (error) {
-            console.log("Error in airplane-service: createAirplane");
+            // console.log("Error in airplane-service: createAirplane");
             throw error;
         }
     }

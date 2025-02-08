@@ -46,6 +46,11 @@ ex:
   npx sequelize init
 ```
 - By executing the above command, you wil get migrations and seeders folders along with the given default config.json file.
+- Run the following commands after intialization to create the database and do the db migrations: 
+```
+npx sequelize db:create
+npx sequelize db:migrate
+```
 - If you're setting up your development environment, then write the username of your db, password of your db, and in dialect mention whatever db you are using. For ex: mysql, postgres, mariadb, etc.
 - If you're setting up test or prod environment, make sure you also replace the host with the hosted db url. 
 - To run the server execute:
