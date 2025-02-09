@@ -20,7 +20,7 @@ class CrudRepository{
         return response;         
     }
 
-    async get(data){
+    async get(data){ //data is primary key
         const response= await this.model.findByPk(data);
         return response;
     }  

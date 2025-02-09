@@ -22,13 +22,34 @@ async function createAirplane(req, res) {
                 .status(StatusCodes.CREATED)
                 .json(SuccessResponse);
     } catch (error) {
-        // console.log("Eror in controller", error);
+        
         ErrorResponse.error = error;
         res.status(error.statusCode)
         .json(ErrorResponse);
     }
 }
-    
+ 
+/**
+ * GET: /airplanes
+ */
+async function getAirplanes(req, res) {
+    try {
+        const airplanes = await airplaneService.getAirplanes();
+
+        SuccessResponse.data = airplanes;
+        return res
+                .status(StatusCodes.OK)
+                .json(SuccessResponse);
+
+    } catch (error) {
+        ErrorResponse.error = error;
+        res
+            .status(error.statusCode)
+            .json(ErrorResponse);
+    }
+}
+
 module.exports = {
     createAirplane,
+    getAirplanes,
 }
