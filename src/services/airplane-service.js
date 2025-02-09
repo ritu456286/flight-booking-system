@@ -44,13 +44,27 @@ class AirplaneService{
             throw new AppError("Cannot fetch the data of the given airplane", StatusCodes.INTERNAL_SERVER_ERROR);
         }
     }
-    async deleteAirplane (data) { //data for now is id, later destructure the data
+    async deleteAirplane (id) { //data for now is id, later destructure the data
         try {
-            const response = await airplaneRepository.destroy(data);
+            const response = await airplaneRepository.destroy(id);
             return response;
         } catch (error) {
-            // console.log("Error in airplane-service: createAirplane");
-            throw error;
+            if(error.statusCode === StatusCodes.NOT_FOUND) {
+                throw new AppError("The airplane you requested to delete is not present", error.statusCode)
+            }
+            throw new AppError("Unable to delete the airplane", StatusCodes.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    async updateAirplane(id, data){
+        try {
+            const response = await airplaneRepository.update(id, data);
+            return response;
+        } catch (error) {
+            if(error.statusCode === StatusCodes.NOT_FOUND) {
+                throw new AppError("The airplane you requested to update is not present", error.statusCode)
+            }
+            throw new AppError("Unable to update the airplane", StatusCodes.INTERNAL_SERVER_ERROR);
         }
     }
 }

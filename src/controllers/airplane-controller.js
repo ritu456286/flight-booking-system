@@ -35,6 +35,8 @@ async function createAirplane(req, res) {
  */
 async function getAirplanes(req, res) {
     try {
+        // console.log("Inside get airplanes")
+
         const airplanes = await airplaneService.getAirplanes();
 
         SuccessResponse.data = airplanes;
@@ -56,7 +58,6 @@ async function getAirplanes(req, res) {
  */
 async function getAirplane(req, res) {
     try {
-    //    console.log("Inside controller, id: ", req.params.id);
         const airplane = await airplaneService.getAirplane(req.params.id);
         SuccessResponse.data = airplane;
         return res.status(StatusCodes.OK)
@@ -68,8 +69,49 @@ async function getAirplane(req, res) {
                 .json(ErrorResponse);
     }
 }
+
+/**
+ * DELETE: /airplanes/:id
+ * req.body: {}
+ */
+async function deleteAirplane(req, res) {
+    try {
+        const airplane = await airplaneService.deleteAirplane(req.params.id);
+        SuccessResponse.data = airplane;
+        return res.status(StatusCodes.OK)
+                .json(SuccessResponse);
+    } catch (error) {
+        ErrorResponse.error = error;
+        return res
+                .status(error.statusCode)
+                .json(ErrorResponse);
+    }
+}
+
+/**
+ * PATCH: /airplanes/:id
+ * req.body: {col: val, col: val..}
+ */
+async function updateAirplane(req, res) {
+    try {
+        console.log(req.body);
+        const airplane = await airplaneService.updateAirplane(req.params.id, req.body);
+        SuccessResponse.data = airplane;
+        return res.status(StatusCodes.OK)
+                .json(SuccessResponse);
+    } catch (error) {
+        ErrorResponse.error = error;
+        return res
+                .status(error.statusCode)
+                .json(ErrorResponse);
+    }
+}
+
+
 module.exports = {
     createAirplane,
     getAirplanes,
     getAirplane,
+    deleteAirplane,
+    updateAirplane,
 }

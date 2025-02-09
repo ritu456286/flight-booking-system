@@ -19,6 +19,11 @@ class CrudRepository{
                 id: data,
             },
         });
+
+        if(!response){
+            throw new AppError("Unable to find the resource", StatusCodes.NOT_FOUND);
+        }
+
         return response;         
     }
 
@@ -41,6 +46,7 @@ class CrudRepository{
                 id: id,
             }
         });
+        return response;
     }
 }
 
