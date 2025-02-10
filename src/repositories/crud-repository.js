@@ -46,6 +46,11 @@ class CrudRepository{
                 id: id,
             }
         });
+        // console.log(this.model.rawAttributes);
+        // console.log("RESPONSE:", response);
+        if(!response){
+            throw new AppError("Unable to find the resource", StatusCodes.NOT_FOUND);
+        }
         return response;
     }
 }
